@@ -8,13 +8,13 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/submit')
+@app.route('/submit_exercise')
 def submit():
-    return render_template('submit.html')
+    return render_template('submit-exercise.html')
 
-@app.route('/retrieve')
+@app.route('/retrieve_exercise')
 def retrieve():
-    return render_template('retrieve.html')
+    return render_template('retrieve-exercise.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
