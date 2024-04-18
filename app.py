@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 from routes.submit_exercise import submit_exercise
 from routes.retrieve_exercise import retrieve_exercise
+from db_config import db_config
 
 app = Flask(__name__)
 
