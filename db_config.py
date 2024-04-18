@@ -13,7 +13,13 @@ class DBConfig:
 
     @staticmethod
     def create_engine():
-        return create_engine(DBConfig.get_database_url())
+        database_url = DBConfig.get_database_url()
+        ssl_mode = "REQUIRED"  # Change this to match your SSL mode
+        
+        # Append SSL parameters to the connection URL
+        if "ssl" not in database_url.lower():
+            database_url += "?ssl=" + ssl_mode
+        else:
+            database_url += "&ssl=" + ssl_mode
 
-# Example usage:
-# engine = DBConfig.create_engine()
+        return create_engine(database_url)
