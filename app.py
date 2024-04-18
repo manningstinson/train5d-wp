@@ -1,7 +1,6 @@
 from flask import Flask, render_template
 from routes.submit_exercise import submit_exercise
 from routes.retrieve_exercise import retrieve_exercise
-from routes.test_db_connection import register_routes
 from db_config import DBConfig
 
 app = Flask(__name__)
@@ -9,6 +8,26 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/test_db_connection')
+def test_db_connection():
+    try:
+        # Create SQLAlchemy engine using DBConfig
+        engine = DBConfig.create_engine()
+        connection = engine.connect()
+
+        # Example query
+        result = connection.execute("SELECT * FROM ex_list LIMIT 1")
+        row = result.fetchone()
+
+        connection.close()
+
+        # Return the fetched row as a string
+        return str(row)
+
+    except Exception as e:
+        return "Error: " + str(e)
+
 
 @app.route('/submit_exercise')
 def submit():
