@@ -22,4 +22,4 @@ class DBConfig:
         else:
             database_url += "&ssl=" + ssl_mode
 
-        return create_engine(database_url)
+        return create_engine(database_url, connect_args={'ssl': {'ssl_mode': ssl_mode}})
