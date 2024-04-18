@@ -14,7 +14,7 @@ class DBConfig:
     @staticmethod
     def create_engine():
         database_url = DBConfig.get_database_url()
-        ssl_mode = "VERIFY_CA"  # Switch to VERIFY_CA for certificate validation
+        ssl_mode = "VERIFY_CA"  # Change this to match your SSL mode (e.g., REQUIRED)
 
         # Pass SSL arguments in connect_args
         connect_args = {'ssl': {'ssl_mode': ssl_mode}}
