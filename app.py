@@ -1,6 +1,8 @@
 from flask import Flask, render_template
 from routes.submit_exercise import submit_exercise
 from routes.retrieve_exercise import retrieve_exercise
+from routes.test_db_connection import test_db_connection
+from routes.display_item import display_item
 from db_config import DBConfig
 
 app = Flask(__name__)

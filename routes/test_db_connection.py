@@ -1,9 +1,9 @@
-from flask import Flask
+from flask import Flask, render_template
 from db_config import DBConfig
 
 app = Flask(__name__)
 
-@app.route('/test-db-connection')
+@app.route('/test_db_connection')
 def test_db_connection():
     try:
         # Create SQLAlchemy engine using DBConfig
@@ -18,6 +18,26 @@ def test_db_connection():
 
         # Return the fetched row as a string
         return str(row)
+
+    except Exception as e:
+        return "Error: " + str(e)
+
+@app.route('/display_item/<int:item_id>')
+def display_item(item_id):
+    try:
+        # Create SQLAlchemy engine using DBConfig
+        engine = DBConfig.create_engine()
+        connection = engine.connect()
+
+        # Example query to fetch item by ID
+        query = "SELECT * FROM ex_list WHERE id = %s"
+        result = connection.execute(query, (item_id,))
+        item = result.fetchone()
+
+        connection.close()
+
+        # Render template to display item
+        return render_template('display_item.html', item=item)
 
     except Exception as e:
         return "Error: " + str(e)
