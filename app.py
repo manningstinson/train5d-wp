@@ -10,13 +10,13 @@ def index():
 @app.route('/test_db_connection')
 def test_db_connection():
     try:
-        # Create SQLAlchemy engine using DBConfig
-        engine = DBConfig().create_engine()  # Instantiate DBConfig class
-        connection = engine.connect()
+        # Create a MySQL connection using DBConfig
+        connection = DBConfig.create_connection()
 
         # Example query
-        result = connection.execute("SELECT * FROM ex_list LIMIT 1")
-        row = result.fetchone()
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM ex_list LIMIT 1")
+            row = cursor.fetchone()
 
         connection.close()
 
