@@ -1,21 +1,19 @@
 import os
-from sqlalchemy import create_engine
 
-class DBConfig:
-  @staticmethod
-  def get_database_url():
-    database_url = os.getenv('DATABASE_URL')
-    if not database_url:
-      raise ValueError("DATABASE_URL environment variable is not set")
-    return database_url
+def get_mysql_config():
+    config = {
+        'host': os.getenv('MYSQL_HOST'),
+        'user': os.getenv('MYSQL_USER'),
+        'password': os.getenv('MYSQL_PASSWORD'),
+        'database': os.getenv('MYSQL_DATABASE')
+    }
+    # Check if SSL mode is set
+    ssl_mode = os.getenv('MYSQL_SSL_MODE')
+    if ssl_mode:
+        config['connect_args'] = {'sslmode': ssl_mode}
+    return config
 
-  @staticmethod
-  def create_engine():
-    database_url = DBConfig.get_database_url()
-    ssl_mode = "verify-ca"  # Use the desired SSL mode
-
-    # Use connect_args for dialect-specific arguments (assuming MySQL)
-    engine = create_engine(database_url, connect_args={'sslmode': ssl_mode})
+def create_engine():
+    config = get_mysql_config()
+    engine = create_engine(**config)  # Unpack dictionary as arguments
     return engine
-
-engine = DBConfig.create_engine()
