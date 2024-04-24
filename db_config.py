@@ -1,6 +1,6 @@
 import os
 
-def get_mysql_config():
+def DBConfig():
     config = {
         'host': os.getenv('MYSQL_HOST'),
         'user': os.getenv('MYSQL_USER'),
