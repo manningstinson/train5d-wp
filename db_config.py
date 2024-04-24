@@ -13,6 +13,5 @@ class DBConfig:
             host=os.getenv('MYSQL_HOST'),
             port=os.getenv('MYSQL_PORT', '3306'),
             database=os.getenv('MYSQL_DATABASE'),
-            ssl_mode=os.getenv('MYSQL_SSL_MODE')
         )
         return connection
